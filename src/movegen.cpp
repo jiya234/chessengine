@@ -193,6 +193,62 @@ void generateallmoves(const Board &board, movelist &movelist) {
                     }
                 }
             }
+            if(p.type==KING){
+                int krow[8]={1,1,1,0,0,-1,-1,-1};
+                int kcol[8]={-1,0,1,-1,1,-1,0,1};
+                for(int i=0;i<8;i++){
+                    int r=row+krow[i];
+                    int c=col+kcol[i];
+                    if(r>=0&&r<8&&c>=0&&c<8){
+                        piece target = board.squares[r][c];
+                        if(target.type==NO_PIECE ||target.color!=p.color){
+                            move m;
+                            m.fromrow=row;
+                            m.fromcol=col;
+                            m.tocol=c;
+                            m.torow=r;
+                            movelist.moves[movelist.cnt++]=m;
+                        }
+                    }
+                }
+            }
         } 
     } 
+}
+bool issquareattacked(const Board &board,int row,int col,Color bycolor){
+    if(bycolor==WHITE){
+        if(row-1>=0&&col-1>=0){
+            piece p=board.squares[row-1][col-1];
+        
+            if(p.color==WHITE&&p.type==PAWN)return true;
+        }
+            if(row-1>=0&&col+1<8){
+                piece p=board.squares[row-1][col+1];
+                if(p.type==PAWN&&p.color==WHITE)return true; 
+        }
+    if(bycolor==BLACK){
+        if(row+1<8&&col-1>=0){
+            piece p = board.squares[row+1][col-1];
+            if(p.type==PAWN&&p.color==BLACK)return true;
+
+        }
+        if(row+1<8&&col+1<8){
+            piece p=board.squares[row+1][col+1];
+            if(p.type==PAWN&&p.color==BLACK)return true;
+        }
+    }
+    }
+    int krow[8]={2,2,-2,-2,1,1,-1,-1};
+    int kcol[8]={-1,1,1,-1,2,-2,2,-1};
+    for(int i=0;i<8;i++){
+        int r=row+krow[i];
+        int c=col+kcol[i];
+        if(r>0&&r<8&&c>0&&c<8){
+            piece p=board.squares[r][c];
+            if(p.type==KNIGHT&&p.color==bycolor)
+            return true;
+        }
+    }
+    int drow[4] = {1,1,-1,-1};
+int dcol[4] = {1,-1,1,-1};
 }
