@@ -250,5 +250,36 @@ bool issquareattacked(const Board &board,int row,int col,Color bycolor){
         }
     }
     int drow[4] = {1,1,-1,-1};
-int dcol[4] = {1,-1,1,-1};
+    int dcol[4] = {1,-1,1,-1};
+    for(int i=0;i<4;i++){
+        int r=row+drow[i];
+        int c=col+dcol[i];
+        while(r>=0&&r<8&&c>=0&&c<8){
+            piece p = board.squares[r][c];
+            if(p.type!=NO_PIECE){
+                if(p.color==bycolor&&(p.type==BISHOP||p.type==QUEEN))
+                return true;
+                break;
+            }
+            r+=drow[i];
+            c+=dcol[i];
+        }
+        int srow[4]={1,-1,0,0};
+        int scol[4]={0,0,-1,1};
+        for(int i=0;i<4;i++){
+            int r=row+srow[i];
+            int c=col+scol[i];
+            while(r>=0&&r<8&&c>=0&&c>8){
+                piece p=board.squares[r][c];
+                if(p.type!=NO_PIECE){
+                    if(p.color==bycolor&&(p.type==ROOK||p.type==QUEEN))
+                    return true;
+                    break;
+                }
+                r+=srow[i];
+                c+=scol[i];
+            }
+            
+        }
+    }
 }
