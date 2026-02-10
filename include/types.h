@@ -1,6 +1,7 @@
 #ifndef types_h
 #define types_h
 enum Color{
+    NONE,
    WHITE,
    BLACK
 };
