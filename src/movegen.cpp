@@ -339,3 +339,31 @@ void generatelegalmoves(Board &board,movelist &legalmoves){
     }
 
 }
+bool iskingcheck(const Board &board,Color color){
+    int kr,kc;
+    for(int r=0;r<8;r++){
+        for(int c=0;c<8;c++){
+            piece p=board.squares[r][c];
+            if(p.type==KING&&p.color==color){
+                kr=r;
+                kc=c;
+            }
+        }
+    }
+    Color enemy=(color==WHITE)?BLACK:WHITE;
+    return issquareattacked(board,kr,kc,enemy);
+}
+bool ischeckmate(Board &board,Color color){
+    if(iskingcheck(board,color))
+    return false;
+    movelist legal;
+    generatelegalmoves(board,legal);
+    return legal.cnt==0;
+}
+bool isstalemate(Board &board,Color color){
+    if(iskingcheck(board, color))
+    return false;
+    movelist legal;
+    generatelegalmoves(board,legal);
+    return legal.cnt==0;
+}
