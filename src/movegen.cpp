@@ -353,17 +353,23 @@ bool iskingcheck(const Board &board,Color color){
     Color enemy=(color==WHITE)?BLACK:WHITE;
     return issquareattacked(board,kr,kc,enemy);
 }
-bool ischeckmate(Board &board,Color color){
-    if(iskingcheck(board,color))
-    return false;
+bool ischeckmate(Board &board, Color color){
+    if(!iskingcheck(board, color))
+        return false;
+
     movelist legal;
-    generatelegalmoves(board,legal);
-    return legal.cnt==0;
+    generatelegalmoves(board, legal);
+
+    return legal.cnt == 0;
 }
-bool isstalemate(Board &board,Color color){
+
+bool isstalemate(Board &board, Color color){
     if(iskingcheck(board, color))
-    return false;
+        return false;
+
     movelist legal;
-    generatelegalmoves(board,legal);
-    return legal.cnt==0;
+    generatelegalmoves(board, legal);
+
+    return legal.cnt == 0;
 }
+
